@@ -97,8 +97,14 @@ Numbers refer to the "Unsettled" list in the
    **Streaming keeps ahead of speech:** paragraphs of 30 to 75 words take 9 to 20 s to speak at 190 wpm and arrive every
    2.5 s, so the speaker never waited on the writer in any run (the report would print a "speaker waited" marker).
    The writer finishes a 370-word Response in about 25 to 35 s while playback runs about 2 minutes.
-   Extended thinking is the dominant cost and `MAX_THINKING_TOKENS` is session-wide; whether a fork or agent can disable
-   thinking on its own is an open question for the spec.
+   Extended thinking is the dominant cost. Every run without the env var shows a 1.4K to 5.5K character thinking block on
+   the fork's first turn and none afterwards; the `MAX_THINKING_TOKENS=0` run shows zero thinking on every turn (fork
+   transcripts under `~/.claude/projects/.../subagents/`). The docs offer no per-skill or per-agent thinking switch:
+   [skill frontmatter](https://code.claude.com/docs/en/skills#core-frontmatter-fields) and
+   [agent frontmatter](https://code.claude.com/docs/en/sub-agents#key-frontmatter-fields) have `effort` but nothing for
+   thinking, and `effort` changes depth, not on/off. `MAX_THINKING_TOKENS` is not in the current docs (it works on 2.1.269)
+   and is session-wide. So a forked Command cannot turn thinking off by itself; a writer launched as its own
+   `claude -p --bare` process can, because the env var is set per process.
 10. **Race, hook write vs immediate `/read-aloud`:** the Stop hook costs 1 to 3 ms per turn and completes before the turn
     ends; in every probe the injection read a file written seconds earlier. Interactive fast typing still needs the human.
 
