@@ -131,3 +131,12 @@ Run the interactive command above (try both with and without `MAX_THINKING_TOKEN
 9. `plugin/bin/read-aloud-ctl report` for the measured time to first audio in interactive mode.
 
 Record the verdict on ticket #4, then `plugin/bin/read-aloud-ctl reset`.
+
+## Verdict (2026-09-11)
+
+Recorded on [ticket #4](https://github.com/rileybroberts/claude-read-aloud/issues/4). In short: the Command's shape is right
+(one-line notice, streamed speech that handles code, tables, and lists, stop and replace by ear, 3.7 to 5.4 s to first audio
+with thinking off, speech that survives quitting Claude Code); the `say` voice is not; and the forked-skill mechanism fails in
+an interactive session: the main model paraphrases the `Reading started.` relay so the sentinel misses four times in six and
+the saved Response gets overwritten, forks cannot be cancelled on replace or stop, and `--show` was ignored by the writer.
+Evidence from the listening session is in `results/interactive/` (log, per-Reading reports, relay digest).

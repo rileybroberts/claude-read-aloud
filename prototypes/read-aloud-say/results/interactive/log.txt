@@ -1,0 +1,163 @@
+14:00:18.668 1789160418.669 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 531, "verdict": "readable", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:01:09.412 1789160469.413 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:01:10.301 1789160470.301 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 531, "age_s": 51.633, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:01:13.800 1789160473.800 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140113-465c", "player_pid": 1240, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:01:13.800 1789160473.801 say {"reading": "140113-465c", "para": 1, "words": 11}
+14:01:13.834 1789160473.834 player-up {"reading": "140113-465c", "pid": 1240, "pgid": 1240, "session_leader": true, "silent": false}
+14:01:13.834 1789160473.834 speak-begin {"reading": "140113-465c", "para": 1, "words": 11}
+14:01:17.115 1789160477.115 say {"reading": "140113-465c", "para": 2, "words": 46}
+14:01:18.951 1789160478.951 speak-end {"reading": "140113-465c", "para": 1, "rc": 0, "s": 5.12}
+14:01:18.951 1789160478.952 speak-begin {"reading": "140113-465c", "para": 2, "words": 46}
+14:01:19.383 1789160479.383 say {"reading": "140113-465c", "para": 3, "words": 48}
+14:01:21.690 1789160481.690 say {"reading": "140113-465c", "para": 4, "words": 51}
+14:01:24.328 1789160484.329 say {"reading": "140113-465c", "para": 5, "words": 50}
+14:01:26.530 1789160486.531 say {"reading": "140113-465c", "para": 6, "words": 43}
+14:01:28.953 1789160488.954 say {"reading": "140113-465c", "para": 7, "words": 45}
+14:01:31.286 1789160491.287 say {"reading": "140113-465c", "para": 8, "words": 43}
+14:01:32.837 1789160492.838 end {"reading": "140113-465c", "paragraphs": 8}
+14:01:33.500 1789160493.501 speak-end {"reading": "140113-465c", "para": 2, "rc": 0, "s": 14.55}
+14:01:33.501 1789160493.501 speak-begin {"reading": "140113-465c", "para": 3, "words": 48}
+14:01:36.222 1789160496.222 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 9, "verdict": "short", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:01:55.272 1789160515.273 speak-end {"reading": "140113-465c", "para": 3, "rc": 0, "s": 21.77}
+14:01:55.275 1789160515.275 speak-begin {"reading": "140113-465c", "para": 4, "words": 51}
+14:02:14.094 1789160534.095 speak-end {"reading": "140113-465c", "para": 4, "rc": 0, "s": 18.82}
+14:02:14.095 1789160534.096 speak-begin {"reading": "140113-465c", "para": 5, "words": 50}
+14:02:31.745 1789160551.746 speak-end {"reading": "140113-465c", "para": 5, "rc": 0, "s": 17.65}
+14:02:31.747 1789160551.748 speak-begin {"reading": "140113-465c", "para": 6, "words": 43}
+14:02:46.376 1789160566.377 speak-end {"reading": "140113-465c", "para": 6, "rc": 0, "s": 14.63}
+14:02:46.378 1789160566.379 speak-begin {"reading": "140113-465c", "para": 7, "words": 45}
+14:03:02.314 1789160582.315 speak-end {"reading": "140113-465c", "para": 7, "rc": 0, "s": 15.94}
+14:03:02.316 1789160582.317 speak-begin {"reading": "140113-465c", "para": 8, "words": 43}
+14:03:18.317 1789160598.318 speak-end {"reading": "140113-465c", "para": 8, "rc": 0, "s": 16.0}
+14:03:18.317 1789160598.318 player-exit {"reading": "140113-465c", "why": "done", "spoken": 8}
+14:05:31.979 1789160731.980 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:05:32.131 1789160732.131 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 9, "age_s": 235.909, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:05:34.653 1789160734.653 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140534-7e5d", "player_pid": 2970, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:05:34.653 1789160734.654 say {"reading": "140534-7e5d", "para": 1, "words": 8}
+14:05:34.688 1789160734.689 player-up {"reading": "140534-7e5d", "pid": 2970, "pgid": 2970, "session_leader": true, "silent": false}
+14:05:34.688 1789160734.689 speak-begin {"reading": "140534-7e5d", "para": 1, "words": 8}
+14:05:37.067 1789160737.067 end {"reading": "140534-7e5d", "paragraphs": 1}
+14:05:38.390 1789160738.391 speak-end {"reading": "140534-7e5d", "para": 1, "rc": 0, "s": 3.7}
+14:05:38.391 1789160738.391 player-exit {"reading": "140534-7e5d", "why": "done", "spoken": 1}
+14:05:40.026 1789160740.027 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 3, "verdict": "short", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:06:25.892 1789160785.892 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 218, "verdict": "readable", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:06:32.893 1789160792.893 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:06:33.023 1789160793.023 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 218, "age_s": 7.131, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:06:38.242 1789160798.242 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140638-b46b", "player_pid": 3484, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:06:38.242 1789160798.243 say {"reading": "140638-b46b", "para": 1, "words": 187}
+14:06:38.276 1789160798.276 player-up {"reading": "140638-b46b", "pid": 3484, "pgid": 3484, "session_leader": true, "silent": false}
+14:06:38.276 1789160798.276 speak-begin {"reading": "140638-b46b", "para": 1, "words": 187}
+14:06:40.510 1789160800.511 end {"reading": "140638-b46b", "paragraphs": 1}
+14:06:43.595 1789160803.596 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 6, "verdict": "short", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:06:45.337 1789160805.338 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "stop", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:06:45.338 1789160805.338 kill {"reading": "140638-b46b", "pid": 3484, "killed": true, "why": "stop"}
+14:06:45.338 1789160805.338 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "stop", "reason": "Read aloud: stopped."}
+14:07:40.876 1789160860.877 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 346, "verdict": "readable", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:07:56.791 1789160876.792 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:07:56.932 1789160876.933 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 346, "age_s": 16.056, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:08:00.436 1789160880.437 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140800-63e0", "player_pid": 4288, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:08:00.437 1789160880.437 say {"reading": "140800-63e0", "para": 1, "words": 11}
+14:08:00.471 1789160880.471 player-up {"reading": "140800-63e0", "pid": 4288, "pgid": 4288, "session_leader": true, "silent": false}
+14:08:00.471 1789160880.472 speak-begin {"reading": "140800-63e0", "para": 1, "words": 11}
+14:08:03.884 1789160883.885 say {"reading": "140800-63e0", "para": 2, "words": 33}
+14:08:05.296 1789160885.296 speak-end {"reading": "140800-63e0", "para": 1, "rc": 0, "s": 4.82}
+14:08:05.297 1789160885.297 speak-begin {"reading": "140800-63e0", "para": 2, "words": 33}
+14:08:06.656 1789160886.656 say {"reading": "140800-63e0", "para": 3, "words": 61}
+14:08:07.250 1789160887.251 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:08:07.384 1789160887.385 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 346, "age_s": 26.507, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:08:08.612 1789160888.612 say {"reading": "140800-63e0", "para": 4, "words": 18}
+14:08:10.793 1789160890.794 say {"reading": "140800-63e0", "para": 5, "words": 39}
+14:08:11.092 1789160891.093 kill {"reading": "140800-63e0", "pid": 4288, "killed": true, "why": "replaced"}
+14:08:11.095 1789160891.096 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140811-a68b", "player_pid": 4575, "replaced": "140800-63e0", "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:08:11.096 1789160891.096 say {"reading": "140811-a68b", "para": 1, "words": 11}
+14:08:11.137 1789160891.138 player-up {"reading": "140811-a68b", "pid": 4575, "pgid": 4575, "session_leader": true, "silent": false}
+14:08:11.137 1789160891.138 speak-begin {"reading": "140811-a68b", "para": 1, "words": 11}
+14:08:13.421 1789160893.421 say {"reading": "140800-63e0", "para": 6, "words": 43}
+14:08:14.402 1789160894.402 say {"reading": "140811-a68b", "para": 2, "words": 36}
+14:08:15.510 1789160895.510 speak-end {"reading": "140811-a68b", "para": 1, "rc": 0, "s": 4.37}
+14:08:15.510 1789160895.511 speak-begin {"reading": "140811-a68b", "para": 2, "words": 36}
+14:08:17.652 1789160897.652 say {"reading": "140811-a68b", "para": 3, "words": 55}
+14:08:17.664 1789160897.665 say {"reading": "140800-63e0", "para": 7, "words": 69}
+14:08:20.237 1789160900.237 say {"reading": "140811-a68b", "para": 4, "words": 17}
+14:08:20.356 1789160900.357 say {"reading": "140800-63e0", "para": 8, "words": 58}
+14:08:22.485 1789160902.485 say {"reading": "140811-a68b", "para": 5, "words": 40}
+14:08:24.516 1789160904.516 say {"reading": "140811-a68b", "para": 6, "words": 34}
+14:08:27.487 1789160907.487 say {"reading": "140811-a68b", "para": 7, "words": 67}
+14:08:28.419 1789160908.420 speak-end {"reading": "140811-a68b", "para": 2, "rc": 0, "s": 12.91}
+14:08:28.420 1789160908.421 speak-begin {"reading": "140811-a68b", "para": 3, "words": 55}
+14:08:30.151 1789160910.151 say {"reading": "140811-a68b", "para": 8, "words": 56}
+14:08:30.210 1789160910.210 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "stop", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:08:30.211 1789160910.212 kill {"reading": "140811-a68b", "pid": 4575, "killed": true, "why": "stop"}
+14:08:30.212 1789160910.213 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "stop", "reason": "Read aloud: stopped."}
+14:08:52.858 1789160932.859 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "show", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:08:53.018 1789160933.018 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 346, "age_s": 72.141, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:08:56.451 1789160936.452 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140856-1847", "player_pid": 5303, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:08:56.452 1789160936.452 say {"reading": "140856-1847", "para": 1, "words": 11}
+14:08:56.488 1789160936.488 player-up {"reading": "140856-1847", "pid": 5303, "pgid": 5303, "session_leader": true, "silent": false}
+14:08:56.488 1789160936.489 speak-begin {"reading": "140856-1847", "para": 1, "words": 11}
+14:08:59.565 1789160939.566 say {"reading": "140856-1847", "para": 2, "words": 33}
+14:09:00.830 1789160940.831 speak-end {"reading": "140856-1847", "para": 1, "rc": 0, "s": 4.34}
+14:09:00.831 1789160940.831 speak-begin {"reading": "140856-1847", "para": 2, "words": 33}
+14:09:02.878 1789160942.878 say {"reading": "140856-1847", "para": 3, "words": 66}
+14:09:04.791 1789160944.792 say {"reading": "140856-1847", "para": 4, "words": 18}
+14:09:07.681 1789160947.682 say {"reading": "140856-1847", "para": 5, "words": 33}
+14:09:10.716 1789160950.717 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "stop", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:09:10.718 1789160950.718 kill {"reading": "140856-1847", "pid": 5303, "killed": true, "why": "stop"}
+14:09:10.718 1789160950.718 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "stop", "reason": "Read aloud: stopped."}
+14:09:15.684 1789160955.684 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "--show", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:09:15.838 1789160955.839 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 346, "age_s": 94.961, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:09:19.105 1789160959.106 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "140919-0e22", "player_pid": 5593, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:09:19.106 1789160959.106 say {"reading": "140919-0e22", "para": 1, "words": 11}
+14:09:19.143 1789160959.143 player-up {"reading": "140919-0e22", "pid": 5593, "pgid": 5593, "session_leader": true, "silent": false}
+14:09:19.143 1789160959.144 speak-begin {"reading": "140919-0e22", "para": 1, "words": 11}
+14:09:22.305 1789160962.305 say {"reading": "140919-0e22", "para": 2, "words": 37}
+14:09:23.514 1789160963.515 speak-end {"reading": "140919-0e22", "para": 1, "rc": 0, "s": 4.37}
+14:09:23.515 1789160963.516 speak-begin {"reading": "140919-0e22", "para": 2, "words": 37}
+14:09:24.938 1789160964.938 say {"reading": "140919-0e22", "para": 3, "words": 59}
+14:09:26.713 1789160966.714 say {"reading": "140919-0e22", "para": 4, "words": 20}
+14:09:29.545 1789160969.546 say {"reading": "140919-0e22", "para": 5, "words": 42}
+14:09:31.770 1789160971.770 say {"reading": "140919-0e22", "para": 6, "words": 42}
+14:09:34.511 1789160974.511 say {"reading": "140919-0e22", "para": 7, "words": 67}
+14:09:36.060 1789160976.061 speak-end {"reading": "140919-0e22", "para": 2, "rc": 0, "s": 12.54}
+14:09:36.062 1789160976.062 speak-begin {"reading": "140919-0e22", "para": 3, "words": 59}
+14:09:37.142 1789160977.142 say {"reading": "140919-0e22", "para": 8, "words": 56}
+14:09:39.501 1789160979.502 end {"reading": "140919-0e22", "paragraphs": 8}
+14:09:40.614 1789160980.614 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 2, "verdict": "sentinel", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:09:54.265 1789160994.265 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "stop", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:09:54.265 1789160994.266 kill {"reading": "140919-0e22", "pid": 5593, "killed": true, "why": "stop"}
+14:09:54.265 1789160994.266 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "stop", "reason": "Read aloud: stopped."}
+14:10:16.321 1789161016.321 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "auto on", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:10:16.322 1789161016.322 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "auto", "reason": "Read aloud: auto mode on."}
+14:10:19.964 1789161019.965 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "auto off", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:10:19.965 1789161019.965 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "auto", "reason": "Read aloud: auto mode off."}
+14:10:23.077 1789161023.077 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "brief", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:10:23.232 1789161023.233 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 346, "age_s": 162.355, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:10:26.711 1789161026.711 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "141026-0cac", "player_pid": 6426, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:10:26.711 1789161026.711 say {"reading": "141026-0cac", "para": 1, "words": 15}
+14:10:26.748 1789161026.748 player-up {"reading": "141026-0cac", "pid": 6426, "pgid": 6426, "session_leader": true, "silent": false}
+14:10:26.748 1789161026.748 speak-begin {"reading": "141026-0cac", "para": 1, "words": 15}
+14:10:29.900 1789161029.900 say {"reading": "141026-0cac", "para": 2, "words": 29}
+14:10:32.757 1789161032.757 say {"reading": "141026-0cac", "para": 3, "words": 63}
+14:10:32.763 1789161032.764 speak-end {"reading": "141026-0cac", "para": 1, "rc": 0, "s": 6.02}
+14:10:32.764 1789161032.764 speak-begin {"reading": "141026-0cac", "para": 2, "words": 29}
+14:10:34.956 1789161034.956 end {"reading": "140800-63e0", "paragraphs": 8}
+14:10:35.291 1789161035.291 say {"reading": "141026-0cac", "para": 4, "words": 53}
+14:10:35.700 1789161035.701 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "stop", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:10:35.701 1789161035.701 kill {"reading": "141026-0cac", "pid": 6426, "killed": true, "why": "stop"}
+14:10:35.701 1789161035.701 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "stop", "reason": "Read aloud: stopped."}
+14:10:40.254 1789161040.254 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 32, "verdict": "short", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:10:45.093 1789161045.094 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "status", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:10:45.094 1789161045.094 expansion-block {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "verb": "status", "reason": "Read aloud: idle; auto off; voice default."}
+14:11:32.726 1789161092.727 expansion-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "command_name": "read-aloud-proto:read-aloud", "command_args": "", "command_source": "plugin", "keys": ["command_args", "command_name", "command_source", "cwd", "expansion_type", "hook_event_name", "permission_mode", "prompt", "prompt_id", "session_id", "transcript_path"]}
+14:11:32.842 1789161092.842 response {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 32, "age_s": 52.588, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:11:35.361 1789161095.362 start {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "reading": "141135-7e49", "player_pid": 7484, "replaced": null, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:11:35.361 1789161095.362 say {"reading": "141135-7e49", "para": 1, "words": 8}
+14:11:35.397 1789161095.397 player-up {"reading": "141135-7e49", "pid": 7484, "pgid": 7484, "session_leader": true, "silent": false}
+14:11:35.397 1789161095.397 speak-begin {"reading": "141135-7e49", "para": 1, "words": 8}
+14:11:38.731 1789161098.732 say {"reading": "141135-7e49", "para": 2, "words": 25}
+14:11:39.347 1789161099.348 speak-end {"reading": "141135-7e49", "para": 1, "rc": 0, "s": 3.95}
+14:11:39.348 1789161099.349 speak-begin {"reading": "141135-7e49", "para": 2, "words": 25}
+14:11:41.371 1789161101.371 end {"reading": "141135-7e49", "paragraphs": 2}
+14:11:44.291 1789161104.291 stop-hook {"session": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0", "words": 2, "verdict": "sentinel", "auto": "auto-quiet", "stop_hook_active": false, "ms": 1, "env_sid": "642f5332-3b2e-4d4c-a3cc-52d9421ef7c0"}
+14:11:47.097 1789161107.098 speak-end {"reading": "141135-7e49", "para": 2, "rc": 0, "s": 7.75}
+14:11:47.098 1789161107.098 player-exit {"reading": "141135-7e49", "why": "done", "spoken": 2}
