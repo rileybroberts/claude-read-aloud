@@ -1,0 +1,11 @@
+The prototype ticket is resolved, the map is updated, and three open frontier tickets remain.
+
+Your verdict and the log and transcripts are recorded on the ticket. The Command's shape held up: one-line notice, streamed speech that handled code, tables, and lists, stop and replace by ear, speech surviving a quit. The say voice is the weak link, which confirms Kokoro as the primary engine. Time to first audio in the interactive session with thinking off was 3.7 to 5.4 seconds for seven readings, and 4.4 seconds for the 531-word fixture.
+
+Three findings point the same way. The fork always ended with the exact sentinel, but the main model relayed it verbatim only twice in six. The other relays overwrote the saved response, and twice a later read aloud command read the relay text aloud. Any relay turn is outside the plugin's control. Forks cannot be cancelled.
+
+The replaced fork kept writing into the dead reading, no relay appeared until you interrupted the main turn, and three of nine forks died at the moment a stop was typed. The show flag did nothing because the writer ignored the conditional instruction, and show without dashes started a reading.
+
+Keep the Command's shape and drop the forked-skill mechanism as the default assumption. Weigh the hook-only Command with a daemon-run writer first. The standing decision about the fork is flagged as under review. Evidence from your session is committed and pushed to the prototype branch under results slash interactive, and the prototype's scratch directory is wiped.
+
+The next three tickets are Script rules, Auto mode and the shared writer, and Engine interface and daemon. All three are unblocked and unclaimed.

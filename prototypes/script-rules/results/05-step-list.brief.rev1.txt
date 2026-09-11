@@ -1,0 +1,11 @@
+I need to see the Response that's on screen right now to rewrite it as a Script. Could you paste or show me the Response you'd like me to convert to spoken format?
+
+However, I notice you've also given me instructions to start testing the prototype plugin. Let me clarify: are you asking me to:
+
+1. **First:** Open a terminal and run the Claude Code prototype with the read-aloud-say plugin, ask a test question, and then go through the checklist items you listed?
+
+2. **Or:** Wait for you to paste a Response that's currently on screen, which I'll rewrite as a Script?
+
+If it's item 1, I can do that. I'll start the terminal, run the fast variant with `MAX_THINKING_TOKENS=0`, ask a question that produces a long Response with code, table, and list, then work through each checklist item and report back with my findings.
+
+Let me know which you need, and I'll proceed.

@@ -1,0 +1,21 @@
+Adding retry with exponential backoff is a simple pattern for handling transient errors gracefully.
+
+When a request fails with a transient error, you wait a bit and try again, doubling the wait each time so you stop hammering a struggling server. Add a little random jitter so a thundering herd of clients doesn't retry in lockstep.
+
+There's a compact implementation in the file retry.ts under src/lib. The function takes options for the maximum number of attempts, a base delay in milliseconds, and a maximum delay in milliseconds. It wraps a function that returns a promise, and tries it up to the maximum number of times.
+
+Each attempt catches errors and checks whether they're retryable. If they are and you haven't hit the maximum attempts yet, it computes a backoff time by doubling the base delay with each attempt, caps it at the maximum delay, adds jitter of up to 30 percent, and sleeps for that duration before retrying.
+
+An error is retryable if it's either a response with status 429 or 500 and above, or any non-response error.
+
+With the default settings, the delay schedule works like this. The first attempt has no delay. The second adds 250 milliseconds before retry, plus jitter. The third adds 500 milliseconds before retry. The fourth adds 1,000 milliseconds. The fifth adds 2,000 milliseconds.
+
+The sixth adds 4,000 milliseconds. With jitter, those times can be 30 percent longer. Before you ship this, there are several things to keep in mind. First, don't retry non-idempotent writes unless the endpoint supports an idempotency key, because a retried POST to charges can double-bill someone.
+
+Second, respect the Retry-After header if the server sends one, because that beats your computed backoff. Third, cap total elapsed time, not just attempt count, because five attempts with a 30-second ceiling can block a request for over a minute.
+
+And fourth, log the attempt number so retry storms are visible in your traces. To wire it up, do these in order. First, install the helper and export it from your HTTP client module. Then wrap only the read paths first, GET and HEAD, and deploy.
+
+Watch your p ninety-nine latency and error-rate dashboards for a day. Finally, extend it to idempotent writes, one endpoint at a time.
+
+If retries still aren't enough, the next step up is a circuit breaker: after a threshold of consecutive failures, stop calling the dependency entirely for a cooldown window and fail fast instead.

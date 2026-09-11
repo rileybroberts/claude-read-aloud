@@ -1,0 +1,11 @@
+The core idea is simple: when a request fails with a transient error, wait a bit and try again, doubling the wait each time so you stop hammering a struggling server.
+
+The implementation is in a file called retry dot ts, and it takes a function to retry, plus options for maximum attempts, base delay, and maximum delay. The function loops up to max attempts, catches errors, checks if they're retryable, and then sleeps for an exponentially increasing delay with a bit of random jitter mixed in so a thundering herd doesn't retry in lockstep.
+
+With the default settings, the delay schedule starts at 250 milliseconds, then 500, then 1,000, then 2,000, and finally 4,000 milliseconds, with jitter adding up to 30 percent more to each one. The cumulative wait by attempt five is about 4.9 seconds.
+
+Before you ship this, don't retry non-idempotent writes unless the endpoint supports an idempotency key, because a retried POST can double-bill someone. Respect the Retry-After header if the server sends one, because that beats your computed backoff. Also cap total elapsed time, not just attempt count, and log the attempt number so retry storms are visible in your traces rather than hidden.
+
+To wire it up, first install the helper and export it from your HTTP client module. Then wrap only the read paths first, like GET and HEAD, and deploy. Watch your p ninety-nine latency and error-rate dashboards for a day, then extend it to idempotent writes, one endpoint at a time.
+
+If retries still aren't enough, the next step up is a circuit breaker: after a threshold of consecutive failures, stop calling the dependency entirely for a cooldown window and fail fast instead.

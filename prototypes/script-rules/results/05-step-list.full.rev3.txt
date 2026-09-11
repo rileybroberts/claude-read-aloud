@@ -1,0 +1,27 @@
+Prototype state is ready for testing. Open a second terminal and start Claude Code with the prototype plugin, running the fast variant first since that's the design direction.
+
+Run this command with the environment variable set to zero: MAX underscore THINKING underscore TOKENS equals zero, then the path to the plugin directory.
+
+Then run one more time without the environment variable, but only for item one, so you can feel the thinking delay.
+
+Ask for something that produces a long Response with a code block, a table, and a list. Work through the checklist below and jot one line per item, then paste them back here so the measured timings can be pulled from the log.
+
+First, type slash read-aloud when the Response lands. Note the rough seconds to speech. Does the Script sound like a person talking? How did it handle the code, table, and list? Any dead air between paragraphs?
+
+Second, check the screen footprint. What shows while the fork runs and when it finishes: a slash tasks footer hint, a task row, a relayed Reading started line? Is that acceptable as the one-line notice?
+
+Third, mid-Reading, type slash read-aloud stop. How does the blocked expansion render, plain line or error banner? Did speech stop within a second? Did anything land in the conversation?
+
+Fourth, mid-Reading, type slash read-aloud again. Was there a clean handover to the new Reading?
+
+Fifth, try the control verbs: slash read-aloud status, slash read-aloud auto on, slash read-aloud auto off. Check rendering only.
+
+Sixth, type slash read-aloud brief on a long Response, then slash read-aloud with the show flag to see a Script on screen.
+
+Seventh, type slash read-aloud the instant a Response lands. Did it read the new one or the previous one?
+
+Eighth, exit Claude Code while speech plays. Expected: speech continues.
+
+Ninth, your gut verdict. Would you leave this on? What would make you turn it off?
+
+Do not run reset afterwards; the log is needed to report the timings.

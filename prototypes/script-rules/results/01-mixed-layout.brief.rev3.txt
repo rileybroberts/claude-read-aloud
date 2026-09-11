@@ -1,0 +1,5 @@
+When a request fails with a transient error, wait and retry with exponential backoff and jitter to avoid overwhelming a struggling server.
+
+The implementation lives in the retry dot ts file. The core function takes a promise-returning callback and retry options, then attempts the function up to five times by default. Each failure triggers a wait that doubles from the previous attempt, capped at 30 seconds, with random jitter added to spread out retries from multiple clients. The function checks if an error is retryable—HTTP 429 and 5-hundred-level responses get retried, but others throw immediately.
+
+Before shipping, respect three critical rules: never retry non-idempotent writes like creating charges without an idempotency key, honor the server's Retry-After header over your computed backoff, and cap total elapsed time, not just attempt count, so a request doesn't block for over a minute. Log each attempt so retry storms show up clearly in traces. Roll this out to reads first, watch your dashboards for a day, then extend to idempotent writes one endpoint at a time. If retries still aren't enough, add a circuit breaker next.

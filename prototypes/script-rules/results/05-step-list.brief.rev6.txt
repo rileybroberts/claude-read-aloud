@@ -1,0 +1,5 @@
+The prototype is ready to test: silent mode is off, no stale processes running, and thinking tokens aren't set, so the two variants will measure differently.
+
+Open a second terminal and start Claude Code with the prototype plugin. Run the fast variant first since the design is leaning toward it. Use the max thinking tokens variable set to zero. Then, if you want, run one more time without that variable for the first item only to feel the thinking delay.
+
+Ask something that produces a long response with code, a table, and a list. Work through the nine-item checklist. For each item, jot what you observe and paste them back here so I can pull the measured timings from the log.

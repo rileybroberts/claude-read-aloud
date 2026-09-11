@@ -1,0 +1,13 @@
+A shell pipeline connects command outputs to inputs using the pipe operator, while a subshell creates a new child shell process that executes commands in isolation.
+
+Pipelines chain commands together left to right, where the output of one becomes the input of the next. Each command runs in its own subprocess, and they execute concurrently while sharing the same environment. Variable changes in one stage don't affect others because each runs in a separate process, though they all descend from the same parent shell.
+
+A subshell, created with parentheses or the explicit bash -c command, spawns an entirely new shell instance. It inherits the parent's environment but operates independently. Variable assignments, directory changes, and other state modifications inside a subshell disappear when it exits because they never touched the parent's memory space.
+
+Pipelines use the pipe operator to connect commands. Subshells use parentheses or bash -c. All stages of a pipeline run concurrently, while a subshell runs independently and then exits. The exit status of a pipeline is the last command, or all commands if pipefail is set. A subshell returns its own exit status to the parent. In both cases, variables are unchanged because they run in separate processes, but in a subshell, variables are scoped to just that subshell.
+
+There are three gotchas to watch for. First, pipeline variables disappear. Writing cat data piped to a while loop that reads lines and increments a count leaves the count empty afterward because the while loop runs in a subprocess that can't modify the parent's variables. Use process substitution with a while loop reading from a here-string instead.
+
+Second, subshell exits are invisible. A subshell can call exit one without terminating your script—it only exits itself. Your parent shell continues unless you explicitly check the exit status afterward.
+
+Third, set -e behaves differently in the two. In pipelines with set -e, only the rightmost command's failure kills the script unless pipefail is enabled. In subshells, set -e applies independently—the subshell dies but the parent might not unless you propagate the exit code with an or-exit pattern.

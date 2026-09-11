@@ -1,0 +1,5 @@
+The migration landed and cut p ninety-nine latency by 62 percent while tripling throughput and saving 14,500 dollars a month.
+
+It took about 18 months from the original RFC, touched roughly 1,240 files across 7 packages, and pushed throughput from about 450 requests per second to 2,100. P ninety-nine latency dropped from 890 milliseconds to 338 milliseconds. The real problem wasn't SQL itself; PostgreSQL 16.2 changed how NULLS DISTINCT works in unique indexes, so about 0.3 percent of rows that had coexisted quietly for years suddenly collided. You caught it in staging, rolled back within 11 minutes, added a dedupe pass, and ran again.
+
+If you're doing something similar, read the release notes twice, keep the old read-replica warm for at least 48 hours, and don't schedule a cutover on a Friday. The migration ran Thursday, which meant a full workday to fix things, versus debugging a 500-error storm at 2 a.m. on a Saturday when your on-call engineer's phone is on Do Not Disturb.

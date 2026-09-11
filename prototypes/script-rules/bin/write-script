@@ -1,0 +1,288 @@
+#!/usr/bin/env python3
+"""PROTOTYPE, throwaway. Turn one Response into a Script with a bare headless writer.
+
+Streams the writer's output, cuts it into paragraphs as blank lines arrive, optionally speaks
+each paragraph with macOS `say` the moment it completes, lints the Script against the rules that
+do not need ears, saves the Script under results/, and appends one stats line to results/runs.jsonl.
+
+usage: write-script RESPONSE.md [--brief] [--cap-words 680] [--model haiku] [--speak] [--voice Samantha]
+                                [--rate 190] [--tag rev1] [--quiet]
+"""
+import argparse, json, os, pathlib, queue, re, subprocess, sys, threading, time
+
+HERE = pathlib.Path(__file__).resolve().parent.parent
+PROMPT = HERE / "prompt"
+RESULTS = HERE / "results"
+
+# Spoken by the harness, not the writer, when the duration cap forces brief. Audible at t=0.
+CAP_NOTICE = "That was a long one, so here's the one minute version."
+
+WPM = 170  # rough speaking rate for duration estimates
+
+
+def words(s):
+    return len(s.split())
+
+
+def build_system(mode):
+    return (PROMPT / "rules.md").read_text().rstrip() + "\n\n" + (PROMPT / f"mode-{mode}.md").read_text()
+
+
+# ---- lint: the rules a machine can check -------------------------------------------------
+
+RESIDUE = [
+    ("backtick", r"`"),
+    ("heading", r"^\s*#{1,6}\s"),
+    ("table-pipe", r"^\s*\|"),
+    ("bullet", r"^\s*[-*•]\s"),
+    ("numbered", r"^\s*\d+[.)]\s"),
+    ("bold/italic", r"\*\*|__|(?<!\w)\*(?!\s)|(?<!\w)_(?=\w)"),
+    ("link", r"\]\(|https?://|www\."),
+    ("arrow", r"->|→|=>"),
+    ("path", r"(?<![\w.])[\w.-]+/[\w./-]+"),
+    ("flag", r"(?<!\w)--?[a-z][\w-]*"),
+    ("unit-abbrev", r"\b\d+(\.\d+)?\s?(ms|s|kHz|Hz|MB|GB|KB|wpm|min|hrs?|K|M)\b"),
+    ("ampersand", r"&"),
+    ("issue-hash", r"#\d+"),
+    ("emoji", r"[\U0001F300-\U0001FAFF☀-➿]"),
+]
+
+
+def lint(paragraphs, mode, capped):
+    flags = []
+    body = paragraphs[1:] if capped else paragraphs  # skip the harness notice
+    text = "\n".join(body)
+    for name, rx in RESIDUE:
+        hits = re.findall(rx, text, re.M)
+        if hits:
+            flags.append(f"{name}x{len(hits)}")
+    if body:
+        w0 = words(body[0])
+        if not 5 <= w0 <= 20:
+            flags.append(f"open={w0}w")
+        for i, p in enumerate(body[1:], 2):
+            w = words(p)
+            if not 30 <= w <= 95:
+                flags.append(f"p{i}={w}w")
+    total = sum(words(p) for p in body)
+    if mode == "brief" and total > 200:
+        flags.append(f"brief={total}w")
+    return flags
+
+
+# ---- chunker: mechanical paragraph sizing, the daemon's job if the prompt can't hold it -------
+
+# two fixed-width look-behinds: system python 3.9 rejects a variable-width one
+SENTENCE_END = re.compile(r'(?:(?<=[.!?])|(?<=[.!?]["\')\]]))\s+(?=[A-Z"\'(])')
+
+
+class Chunker:
+    """Cut streamed prose into spoken chunks: the first sentence alone, then sentences
+    accumulated to at least `lo` words and cut before exceeding `hi`. The writer's blank
+    lines are preferred cut points, not the rule."""
+
+    def __init__(self, lo=40, hi=80):
+        self.lo, self.hi = lo, hi
+        self.buf = ""          # text not yet cut into complete sentences
+        self.pending = []      # complete sentences waiting to fill a chunk
+        self.first_done = False
+
+    def _flush(self):
+        out = " ".join(self.pending).strip()
+        self.pending = []
+        return out
+
+    def feed(self, text, final=False):
+        """Return a list of chunks ready to speak."""
+        self.buf += text
+        out = []
+        # blank line: everything before it is complete sentences, and a preferred cut
+        while "\n\n" in self.buf:
+            head, self.buf = self.buf.split("\n\n", 1)
+            out += self._take(head.strip(), boundary=True)
+        # otherwise cut only at sentence ends we can see
+        parts = SENTENCE_END.split(self.buf)
+        if len(parts) > 1:
+            complete, self.buf = parts[:-1], parts[-1]
+            out += self._take(" ".join(complete), boundary=False)
+        if final:
+            out += self._take(self.buf.strip(), boundary=True)
+            self.buf = ""
+            if self.pending:
+                out.append(self._flush())
+        return [c for c in out if c]
+
+    def _take(self, text, boundary):
+        out = []
+        for s in SENTENCE_END.split(text) if text else []:
+            s = s.strip()
+            if not s:
+                continue
+            if not self.first_done:            # the opening chunk is the first sentence alone
+                out.append(s)
+                self.first_done = True
+                continue
+            if self.pending and words(" ".join(self.pending)) + words(s) > self.hi:
+                out.append(self._flush())      # mid-paragraph: cut only when the next sentence would overflow
+            self.pending.append(s)
+        if boundary and self.pending and words(" ".join(self.pending)) >= self.lo * 0.5:
+            out.append(self._flush())          # the writer's blank line closes a chunk that is at least half full
+        return out
+
+
+# ---- speaker ----------------------------------------------------------------------------
+
+class Speaker(threading.Thread):
+    def __init__(self, voice, rate):
+        super().__init__(daemon=True)
+        self.q = queue.Queue()
+        self.voice, self.rate = voice, rate
+        self.proc = None
+        self.spoke = []  # (t_start, t_end, words)
+
+    def run(self):
+        while True:
+            text = self.q.get()
+            if text is None:
+                return
+            t0 = time.time()
+            self.proc = subprocess.Popen(["say", "-v", self.voice, "-r", str(self.rate)], stdin=subprocess.PIPE)
+            self.proc.communicate(text.encode())
+            self.spoke.append((t0, time.time(), words(text)))
+
+    def stop(self):
+        if self.proc and self.proc.poll() is None:
+            self.proc.kill()
+
+
+# ---- main -------------------------------------------------------------------------------
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("response")
+    ap.add_argument("--brief", action="store_true")
+    ap.add_argument("--cap-words", type=int, default=680, help="above this, fall back to brief with a notice (about 4 min at 170 wpm)")
+    ap.add_argument("--model", default="haiku")
+    ap.add_argument("--effort", default="low")
+    ap.add_argument("--speak", action="store_true")
+    ap.add_argument("--voice", default="Samantha")
+    ap.add_argument("--rate", type=int, default=190)
+    ap.add_argument("--tag", default="", help="suffix for the results file, e.g. the prompt revision")
+    ap.add_argument("--chunk", action="store_true", help="re-cut the writer's prose mechanically: first sentence alone, then 40 to 80 words at sentence ends")
+    ap.add_argument("--quiet", action="store_true")
+    a = ap.parse_args()
+
+    resp_path = pathlib.Path(a.response)
+    response = resp_path.read_text()
+    rwords = words(response)
+    capped = (not a.brief) and rwords > a.cap_words
+    mode = "brief" if (a.brief or capped) else "full"
+    name = resp_path.stem
+    stem = f"{name}.{mode}" + (f".{a.tag}" if a.tag else "")
+    RESULTS.mkdir(exist_ok=True)
+
+    say = lambda s: None if a.quiet else print(s, flush=True)
+    say(f"== {name}: {rwords} words, mode={mode}{' (capped)' if capped else ''}, model={a.model}")
+
+    speaker = None
+    if a.speak:
+        speaker = Speaker(a.voice, a.rate)
+        speaker.start()
+
+    paragraphs, times, writer_paragraphs = [], [], []
+    t0 = time.time()
+    chunker = Chunker() if a.chunk else None
+
+    def emit(p):
+        p = p.strip()
+        if not p:
+            return
+        paragraphs.append(p)
+        times.append(time.time() - t0)
+        say(f"\n[{times[-1]:5.1f}s, {words(p):3}w] {p}")
+        if speaker:
+            speaker.q.put(p)
+
+    def feed(text, final=False):
+        """Route writer text either straight through (writer's paragraphs) or via the chunker."""
+        if chunker:
+            for c in chunker.feed(text, final):
+                emit(c)
+        else:
+            feed.buf += text
+            while "\n\n" in feed.buf:
+                head, feed.buf = feed.buf.split("\n\n", 1)
+                emit(head)
+            if final:
+                emit(feed.buf)
+                feed.buf = ""
+    feed.buf = ""
+
+    if capped:
+        emit(CAP_NOTICE)
+
+    env = dict(os.environ, MAX_THINKING_TOKENS="0")
+    cmd = ["claude", "-p", "--bare", "--no-session-persistence", "--model", a.model, "--effort", a.effort,
+           "--output-format", "stream-json", "--include-partial-messages", "--verbose",
+           "--system-prompt", build_system(mode)]
+    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=env, text=True)
+    proc.stdin.write((PROMPT / "user.md").read_text().replace("{response}", response.strip()))
+    proc.stdin.close()
+
+    raw, t_first_delta, result = "", None, {}
+    for line in proc.stdout:
+        try:
+            d = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if d.get("type") == "stream_event":
+            ev = d.get("event", {})
+            if ev.get("type") == "content_block_delta":
+                txt = ev.get("delta", {}).get("text", "")
+                if txt and t_first_delta is None:
+                    t_first_delta = time.time() - t0
+                raw += txt
+                feed(txt)
+        elif d.get("type") == "result":
+            result = d
+    proc.wait()
+    feed("", final=True)
+    t_done = time.time() - t0
+    writer_paragraphs = [words(p) for p in raw.split("\n\n") if p.strip()]
+
+    if speaker:
+        speaker.q.put(None)
+        try:
+            speaker.join()
+        except KeyboardInterrupt:
+            speaker.stop()
+
+    flags = lint(paragraphs, mode, capped)
+    body = paragraphs[1:] if capped else paragraphs
+    script_words = sum(words(p) for p in body)
+    stats = dict(
+        name=name, mode=mode, capped=capped, tag=a.tag, model=a.model,
+        response_words=rwords, script_words=script_words, ratio=round(script_words / max(rwords, 1), 2),
+        est_seconds=round(script_words / WPM * 60),
+        paragraphs=[words(p) for p in body],
+        writer_paragraphs=writer_paragraphs, chunked=a.chunk,
+        t_first_delta=round(t_first_delta or 0, 2),
+        t_first_paragraph=round(times[1] if capped else (times[0] if times else 0), 2),
+        t_done=round(t_done, 2),
+        api_ms=result.get("duration_api_ms"), cost_usd=result.get("total_cost_usd"),
+        flags=flags,
+    )
+    (RESULTS / f"{stem}.txt").write_text("\n\n".join(paragraphs) + "\n")
+    with open(RESULTS / "runs.jsonl", "a") as f:
+        f.write(json.dumps(stats) + "\n")
+    say(f"\n-- {script_words}w in {len(body)} paragraphs {stats['paragraphs']}, first paragraph at {stats['t_first_paragraph']}s, "
+        f"done {stats['t_done']}s, ${stats['cost_usd']}, flags={flags or 'none'}")
+    say(f"-- saved results/{stem}.txt")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        subprocess.run(["pkill", "-x", "say"])
+        sys.exit(130)

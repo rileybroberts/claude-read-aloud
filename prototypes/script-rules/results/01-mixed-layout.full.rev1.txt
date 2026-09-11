@@ -1,0 +1,11 @@
+I'll read this sample response aloud as a script.Retry with exponential backoff doubles the wait between failed requests while adding random jitter to avoid synchronized retries.
+
+The implementation lives in the retry file. It exports a with-retry function that takes an async operation and retry options. The function tries up to five times by default, with a base delay of 250 milliseconds that doubles each attempt, capped at 30 seconds. The is-retryable check lets through rate limits and server errors, but stops retrying on success or when you've exhausted attempts.
+
+The delay schedule shows what actually happens. On the first attempt, there's no wait. By the second attempt you wait 325 milliseconds with jitter applied. The third attempt waits 975 milliseconds total. The fourth reaches 2,275 milliseconds. By the fifth and final attempt, you've waited about 4,875 milliseconds cumulative before giving up.
+
+There are four things to be careful about before using this. First, never retry writes unless the endpoint supports an idempotency key, because a retried post to create a charge can bill someone twice. Second, if the server sends a Retry-After header, that always takes priority over your computed backoff. Third, cap the total elapsed time, not just the attempt count, because five attempts with a 30-second ceiling can block a request for over a minute. And fourth, log the attempt number so retry storms show up in your traces instead of hiding inside a single span.
+
+To set it up, install the helper and export it from your HTTP client module. Then wrap only the read paths first, get and head requests, and deploy. Watch your p ninety-nine latency and error-rate dashboards for a day. Once that looks good, extend it to idempotent writes one endpoint at a time.
+
+If retries still don't solve your problem, the next step is a circuit breaker. After a threshold of consecutive failures, stop calling that dependency entirely for a cooldown window and fail fast instead.

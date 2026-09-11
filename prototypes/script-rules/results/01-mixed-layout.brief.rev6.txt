@@ -1,0 +1,9 @@
+The core idea is simple: when a request fails, wait and try again, doubling the wait each time and adding random jitter so clients don't retry in lockstep.
+
+There's a compact implementation in the retry file. It exports a function called withRetry that takes a callback and retry options. The function attempts the callback up to five times by default, and if it fails with a retryable error like a 429 or 5xx response, it waits before trying again. The wait doubles each attempt, capped at 30 seconds, and includes jitter up to 30 percent of the base delay.
+
+The delay schedule shows that attempt one waits 250 milliseconds, attempt two waits 500, attempt three waits 1,000, attempt four waits 2,000, and attempt five waits 4,000 milliseconds. With jitter and cumulative waiting, the total time across five attempts reaches about 4.9 seconds.
+
+Before you ship this, don't retry non-idempotent writes unless the endpoint supports an idempotency key, because a retried POST can double-bill someone. Respect the Retry-After header if the server sends it. Cap total elapsed time, not just attempt count, so five attempts don't block for over a minute. Log the attempt number so retry storms show up in your traces.
+
+To wire it up, install the helper and export it from your HTTP client module, wrap only the read paths first like GET and HEAD, deploy, and watch your latency and error dashboards for a day. Then extend it to idempotent writes one endpoint at a time. If retries still aren't enough, the next step is a circuit breaker to fail fast after a threshold of consecutive failures.

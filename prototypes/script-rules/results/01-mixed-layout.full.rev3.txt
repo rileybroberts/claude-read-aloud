@@ -1,0 +1,13 @@
+The core idea is simple: when a request fails with a transient error, wait a bit and try again, doubling the wait each time so you stop hammering a struggling server.
+
+Add a little random jitter so a thundering herd of clients doesn't retry in lockstep. Here's a compact implementation in the retry file, which exports a function called with retry. It takes a function that returns a promise, along with options for maximum attempts, base delay in milliseconds, and maximum delay in milliseconds. The function loops through attempts, calling the supplied function and catching errors.
+
+On a retryable error, it calculates an exponential backoff starting from the base delay, capping it at the maximum, then adds random jitter of up to 30 percent of that backoff. It waits that duration before trying again. The function determines what's retryable: a response with status 429 or any status 500 or higher, or any other error type.
+
+The delay schedule with the default settings works out like this. On attempt 1, the base delay is 250 milliseconds, which grows to 325 with jitter. By attempt 5, the base delay reaches 4,000 milliseconds, or 5,200 with jitter, and the cumulative wait time reaches 4,875 milliseconds. A few things are worth calling out before you ship this. Don't retry non-idempotent writes unless the endpoint supports an idempotency key, because a retried POST to charges can double-bill someone.
+
+Respect the retry-after header if the server sends one, because that header beats your computed backoff every time. Cap total elapsed time, not just attempt count, because five attempts with a 30-second ceiling can block a request for over a minute. Log the attempt number so retry storms are visible in your traces rather than hidden inside a single span.
+
+To wire it up, do this in order. First, install the helper and export it from your HTTP client module. Then wrap only the read paths first, GET and HEAD, and deploy. Watch your p ninety-nine latency and error-rate dashboards for a day. Then extend it to idempotent writes, one endpoint at a time.
+
+If retries still aren't enough, the next step up is a circuit breaker: after a threshold of consecutive failures, stop calling the dependency entirely for a cooldown window and fail fast instead.

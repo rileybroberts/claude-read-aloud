@@ -1,0 +1,11 @@
+I'll read this aloud as a script for a colleague.The prototype ticket is resolved, the map is updated, and three open frontier tickets lie ahead.
+
+Your verdict on the recording showed what the log and transcripts revealed underneath it. The Command's shape held: one-line notice, streamed speech that handled code, tables, and lists, stop and replace by ear, speech surviving a quit. The say voice is the weak link, which confirms Kokoro as the primary engine. Time to first audio in the interactive session ranged from 3.7 to 5.4 seconds across seven readings, and the 531-word fixture came in at 4.4 seconds.
+
+Three findings the checklist could not see all pointed the same way. The fork always ended with the exact sentinel, but the main model relayed it verbatim only twice in six attempts. The other relays overwrote the saved Response, and twice a later read-aloud command read the relay text aloud. Any relay turn is outside the plugin's control. Forks cannot be cancelled. The replaced fork kept writing into the dead Reading, no relay appeared until you interrupted the main turn, and three of nine forks died at the moment a stop was typed. The show flag did nothing because the writer ignored the conditional instruction, and show without dashes started a Reading.
+
+The decision on the map is to keep the Command's shape, drop the forked-skill mechanism as the default assumption, and weigh the hook-only Command with a daemon-run writer first. The standing decision about the fork is flagged as under review.
+
+The Auto mode ticket is retitled to also decide whether the Command shares its writer, and it now carries the relay and thinking findings. The Script rules, Engine interface, and subcommands tickets each got a short context section from this verdict. The Auto mode and the Command together fog item graduated, since its questions now live in those tickets. Evidence from your session is committed and pushed to the prototype branch under results interactive, and the prototype's scratch directory is wiped.
+
+The frontier for the next session, in map order, is Script rules, Auto mode and the shared writer, and Engine interface and daemon. All three are unblocked and unclaimed.

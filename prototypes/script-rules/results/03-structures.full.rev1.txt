@@ -1,0 +1,19 @@
+I need to convert this technical response into a spoken script. Let me read it carefully first to understand all the content.Let me work from the text provided. Now I'll convert this into a spoken script following the guidelines:
+
+---
+
+You can't safely share one connection pool across forked workers because the pool duplicates file descriptors rather than protocol state.
+
+A pool is a set of live TCP sockets. When fork duplicates those file descriptors, it doesn't copy the protocol state, so two workers end up sending bytes on the same wire at the same time. This causes several problems that show up in order of how often I've seen them.
+
+First, interleaved protocol frames. Worker A sends a query, worker B sends another query, and then both workers read whichever response arrives first. This means worker A's rows get returned to worker B. You'll see symptoms like "column does not exist" on a query that definitely has that column, or occasional unexpected message type errors from the driver.
+
+Second, double close. Whichever worker exits first tears down the socket, and the other workers see connection reset errors.
+
+Third, silent pool starvation. The parent thinks it holds n connections, but the operating system sees n times the number of workers file descriptors all pointing at n sockets. The database server's max connections accounting disagrees with what everyone else thinks is happening.
+
+The fix is to create the pool after the fork, and size it so the total stays under your budget. The parent process should not create the pool at all. Instead, each worker creates its own pool of the same size, and you make sure the total across all workers doesn't exceed your database's max connections limit.
+
+The sizing rule of thumb is to use floor of max connections times 0.8 divided by worker count. Then leave at least 5 connections free for superuser access and migrations. If max connections is 100 and you have 4 workers, that's 20 each. Round down to 18 so you have headroom when a worker is mid restart and its old sockets haven't timed out yet.
+
+One caveat: if you're behind PgBouncer in transaction mode, none of this applies the same way. The bouncer owns the real connections and your pool is just a set of cheap client side handles. In that setup, oversizing the app pool is nearly free, and max connections on Postgres itself can stay small at around 20 to 30.

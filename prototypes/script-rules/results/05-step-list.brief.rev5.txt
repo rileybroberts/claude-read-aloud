@@ -1,0 +1,5 @@
+The prototype is ready to test with the fast variant first, then optionally the slow one to feel the thinking delay.
+
+Open a second terminal and run Claude Code with the prototype plugin, setting the max thinking tokens variable to zero for the fast variant. Then ask something that produces a long response with a code block, a table, and a list. Work through the nine-item checklist: time the first reading and listen for natural speech, check what shows on screen while the fork runs, stop mid-reading to test the handover, and verify that the control verbs render correctly.
+
+Also test brief mode, fast typing, and quitting while speech plays. After you're done, jot a line per item and paste them back; the timing details will come from the log.

@@ -1,0 +1,7 @@
+The migration landed at 3:47 a.m.
+
+UTC on April 9th, 2026, roughly 18 months after the original RFC, and touched about 1,240 files across 7 packages. Throughput jumped from about 450 requests per second to 2,100 requests per second, p ninety-nine latency dropped 62 percent (from 890 milliseconds to 338 milliseconds), and the AWS bill fell by $14,500 per month — which nobody expected.
+
+The real problem wasn't SQL; it was that PostgreSQL version 16.2 changed how null distinct behaves in unique indexes, so about 0.3 percent of rows that had quietly coexisted for years suddenly collided. The team caught it in staging, rolled back within 11 minutes, added a dedupe pass, and re-ran. If you're doing something similar, read the release notes twice, keep the old read replica warm for at least 48 hours, and don't schedule a cutover on a Friday.
+
+This one ran Thursday, so there was a full workday to fix things instead of debugging a 500-error storm at 2 a.m. on a Saturday while your on-call engineer's phone is on do not disturb.

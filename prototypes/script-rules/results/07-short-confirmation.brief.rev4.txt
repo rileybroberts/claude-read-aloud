@@ -1,0 +1,3 @@
+Yes, the file is there, and it holds the glossary.
+
+The context markdown file sits at the repository root alongside the readme and Claude markdown files, and it defines the canonical meanings of the design's core terms: Response, Script, Reading, Engine, Trigger, Command, and Auto mode. It also marks which synonyms to avoid for each term.

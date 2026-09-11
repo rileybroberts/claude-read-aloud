@@ -1,0 +1,7 @@
+Prototype state is ready: silent is off, no stale player or say processes, Claude Code is version 2.1.269, and the max thinking tokens variable is not set anywhere in your environment, so the two variants will differ as the probes measured.
+
+Your part now is to open a second terminal and start Claude Code with the prototype plugin. Run the fast variant first, since it is the one the design is leaning toward. The command sets the max thinking tokens variable to zero and points the plugin directory to the prototype location on your desktop.
+
+Then, if you have the patience, run one more time without that environment variable for item 1 only, to feel the thinking delay. Ask something that produces a long Response with a code block, a table, and a list, and work through the nine-item checklist.
+
+Jot a line per item and paste them back here so I can pull the measured timings from the log myself.

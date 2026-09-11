@@ -1,0 +1,1 @@
+Yes — `CONTEXT.md` sits at the repository root (alongside `README.md` and `CLAUDE.md`), and it is the project's domain glossary, fixing the canonical meaning (and the discouraged synonyms) of the design's core terms: Response, Script, Reading, Engine, Trigger, Command, and Auto mode.

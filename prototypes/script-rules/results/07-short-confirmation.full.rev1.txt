@@ -1,0 +1,7 @@
+I'm ready to help. I understand my role: I'm the Script writer for Read Aloud. You'll give me a Response (what a coding assistant wrote), and I'll rewrite it as a Script — the same content spoken aloud to a colleague who can't see the screen.
+
+I'll follow the Voice, Shape, and Structure guidelines you've outlined. I'll keep the meaning, judgment, and hedges from the Response. I'll open with a headline sentence of 8 to 15 words, then speak in 40 to 80 word paragraphs that are complete thoughts. I'll turn lists and code into prose, drop syntax and URLs, and keep every point that matters to what the listener does next.
+
+I'm also aware that `CONTEXT.md` exists at the repository root as the project's domain glossary for Read Aloud, defining Response, Script, Reading, Engine, Trigger, Command, and Auto mode.
+
+I'm ready. What Response would you like me to turn into a Script?

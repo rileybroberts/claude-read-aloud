@@ -1,0 +1,15 @@
+That was a long one, so here's the one minute version.
+
+I need to convert this detailed technical response about Python runtime management into a spoken script. Let me read it carefully to understand the full content.The response is comprehensive and contains multiple sections: a comparison table, trade-offs analysis, a recommendation, and a code example. Let me structure this into a spoken script following the guidance provided.
+
+Here's the script:
+
+You're choosing between uv, pipx, and system venv to manage your daemon's Python runtime, and uv is the right pick.
+
+The system venv looks clean because it depends on nothing new, but that's an illusion on macOS. You're actually depending on the Command Line Tools shim, which is a one to two gigabyte install if your teammate hasn't triggered it yet. You're also stuck on Python three-point-nine, which is past end of life, and Apple's universal two interpreter doesn't play well with MLX's arm sixty-four wheels. The worst failure mode is that invoking Python pops a GUI installer dialog and blocks with no output, which is disqualifying for something run from a hook.
+
+pipx is built to expose a command-line app to a human, but your daemon is an implementation detail of a plugin. You want it pinned, not latest, and you want it off the teammate's path. pipx gives you neither locking nor interpreter management. It's also the least likely of the three to already be installed.
+
+uv costs you a young third-party binary from a single vendor, and that's a real supply-chain consideration. In exchange, it's the only option that pins both the interpreter and the full dependency graph with hashes. It's the only one with fast startup suitable for per-invocation use. Its absence is a clean, scriptable check. On first run it takes five to fifteen seconds cold or fifty to one hundred fifty milliseconds warm. It ships wheels in parallel, so big packages like MLX download noticeably faster. When you upgrade, old versions stay cached, so rollback is cheap.
+
+Your daemon should declare its deps inline using PEP seven twenty-three and commit a uv dot lock file. Bootstrap by installing uv into a plugin-local prefix rather than mutating the teammate's shell config. Pin the uv version in the bootstrap itself so that script is reproducible. Set the environment variable UV Python downloads to automatic and require Python three-point-twelve or higher so MLX resolves against a native arm sixty-four interpreter no matter what's on the machine.

@@ -1,0 +1,11 @@
+That was a long one, so here's the one minute version.
+
+The question is how to manage the Python runtime for a daemon: uv offers the best reproducibility and startup speed, but it's a new third-party dependency.
+
+Plain virtual environments seem like they need nothing, but on macOS you depend on the Command Line Tools shim, on an outdated Python 3.9, and on Apple's universal build working with native arm64 wheels.
+
+The worst part is that invoking Python without the Command Line Tools pops a blocking GUI dialog that will hang a plugin hook. pipx is designed to expose a CLI app on your path for a human, not to pin an implementation detail of a plugin, so it leaves the interpreter and dependencies unpinned.
+
+uv is young and fast-moving from a single vendor, which is a supply-chain consideration, but it's the only option that pins both the interpreter and the full dependency graph with hashes. It has the fastest warm startup suitable for per-invocation runs, and when it's missing the check is clean and scriptable.
+
+The recommendation is to use uv with the daemon declaring its dependencies inline and a committed lock file, bootstrapped into a plugin-local prefix rather than mutating the teammate's shell.

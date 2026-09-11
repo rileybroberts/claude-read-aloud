@@ -1,0 +1,19 @@
+A shell pipeline connects command outputs to inputs, while a subshell creates an isolated child shell process.
+
+Pipelines chain commands left to right using the pipe operator, where stdout becomes stdin. Each command runs in its own subprocess, and they execute concurrently. They all descend from the same parent shell, so changes to variables in one stage don't affect others because each runs in a separate process.
+
+A subshell is created with parentheses or the bash minus c flag. It spawns an entirely new shell instance that inherits the parent's environment but operates independently. Variable assignments, directory changes, and other state modifications inside a subshell vanish when it exits because they never touched the parent's memory space.
+
+Here's a pipeline example: cat file dot txt piped to grep for error piped to wc minus l. And here's a subshell example: cd to slash tmp and remove all dot log files, then pwd still shows the original directory.
+
+Pipelines and subshells differ in four ways. Pipelines connect stdout to stdin between commands using the pipe operator, while subshells execute commands in an isolated child shell using parentheses or bash minus c. In pipelines all stages run concurrently, whereas subshells run independently then exit.
+
+Pipelines return the exit status of the last command or all commands if pipefail is set, but subshells return their own exit status to the parent. In both cases, variables remain unchanged because they run in separate processes, but in a subshell, variables are scoped to that subshell only.
+
+Three gotchas to watch. First, pipeline variables disappear. Writing cat data piped to while read line semicolon do count equals count plus one semicolon done leaves count empty afterward because the while loop runs in a subprocess that can't modify the parent's variables.
+
+Use process substitution with while read line semicolon do dot dot dot semicolon done less than less than open paren cat data close paren, or a here-string instead.
+
+Second, subshell exits are invisible. A subshell can call exit 1 without terminating your script—it only exits itself. Your parent shell continues unless you explicitly check the question mark variable afterward. Third, set minus e behaves differently. In pipelines with set minus e, only the rightmost command's failure kills the script unless pipefail is enabled.
+
+In subshells, set minus e applies independently—the subshell dies but the parent might not unless you propagate the exit code with or or exit question mark.

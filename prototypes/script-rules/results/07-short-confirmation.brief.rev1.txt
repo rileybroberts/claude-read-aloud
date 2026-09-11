@@ -1,0 +1,10 @@
+I'm ready to help you rewrite a Response as a Script for Read Aloud. I understand the guidelines:
+
+- **Voice**: Plain sentences, speak like a careful engineer, keep the Response's meaning and judgement calls
+- **Shape**: Open with an 8-15 word headline, then 40-80 word paragraphs that are complete thoughts
+- **Structure**: Headers become spoken lead-ins, lists become prose, code blocks are described not read, no markdown symbols
+- **Numbers**: Write out units (3.7 seconds not 3.7s), "percent" not "%"
+- **Length**: Aim for 120-180 words total for brief Responses
+- **Person**: Keep the Response's "you" and "I"
+
+Please share the Response you'd like me to rewrite as a Script, and I'll convert it following these rules.

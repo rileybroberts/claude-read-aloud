@@ -1,0 +1,13 @@
+Adding retry with exponential backoff means waiting a bit after a transient failure and trying again, doubling the wait each time so you stop hammering a struggling server, and adding random jitter so many clients don't retry in lockstep.
+
+The implementation lives in the retry file. It exports a function that wraps your operation and retries it on transient errors, which are responses with a 429 status or status 500 and above, or any other kind of error. You pass in options for the maximum number of attempts, the base delay in milliseconds, and a ceiling on how long to wait between tries.
+
+The function loops up to the attempt limit, trying to run your operation, and if it fails with a retryable error before the last attempt, it waits for an exponential backoff plus some random jitter before trying again.
+
+With the default settings of five attempts, a 250 millisecond base delay, and a 30 second maximum, the delays double with each attempt: 250 milliseconds on the first try, 500 on the second, 1,000 on the third, 2,000 on the fourth, and 4,000 on the fifth. Jitter adds up to 30 percent more randomness to each delay. The total wait across all five attempts comes to just under five seconds.
+
+Before you deploy, keep a few things in mind. Don't retry non-idempotent writes unless the endpoint supports an idempotency key, because a retried POST to create a charge can double-bill someone. Respect the Retry-After header from the server; it beats your computed backoff. Cap the total elapsed time, not just the attempt count, because five attempts with a 30 second ceiling can block for over a minute.
+
+And log the attempt number so retry storms show up in your traces rather than getting hidden inside a single span.
+
+To wire it up, first install the helper and export it from your HTTP client module. Then wrap only the read paths, GET and HEAD, and deploy. Watch your p ninety-nine latency and error-rate dashboards for a day. Then extend it to idempotent writes, one endpoint at a time. If retries still aren't enough, the next step is a circuit breaker: after a threshold of consecutive failures, stop calling the dependency entirely for a cooldown window and fail fast instead.

@@ -1,0 +1,1 @@
+Yes, the context file sits at the repository root alongside the readme and Claude markdown file, and it holds the project's domain glossary, which fixes the canonical meaning and discouraged synonyms of the design's core terms: Response, Script, Reading, Engine, Trigger, Command, and Auto mode.

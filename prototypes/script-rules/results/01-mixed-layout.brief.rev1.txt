@@ -1,0 +1,13 @@
+I'll read this sample response aloud as a script for a listening colleague.Here's the script:
+
+Implement retry logic with exponential backoff to handle transient errors gracefully without hammering a struggling server.
+
+The basic pattern is this: when a request fails with a transient error, wait a bit and try again, doubling the wait time each attempt so you don't keep hitting the same problem. Add a little random jitter so that many clients retrying at once don't all hit at the same moment.
+
+The implementation lives in a file called retry dot ts. The function takes any asynchronous operation, tries it up to five times by default, and waits between attempts using exponential backoff. It starts with a base delay of 250 milliseconds, increases it by a factor of two each time you fail, caps it at 30 seconds, and mixes in random jitter up to 30 percent of the current delay to spread out the retries.
+
+The schedule works like this: the first retry waits about 250 milliseconds, the second about 500 milliseconds, the third about a second, then two seconds, then four seconds. With jitter included, those times stretch out a bit further. The cumulative wait across all five attempts reaches under five seconds in the best case, though you need to add more time if a server is really struggling and asking you to wait longer.
+
+Before you ship this, watch for three things. First, don't retry non-idempotent writes like a charge request unless the endpoint gives you an idempotency key, because a retried post can double-bill. Second, if the server sends a retry after header, use that instead of your computed backoff. Third, cap the total time a request can block, not just the attempt count, so five attempts don't end up waiting for over a minute.
+
+To deploy this, first export the helper from your HTTP client module. Then wrap only read requests, that's get and head, and deploy it. Watch your p ninety-nine latency and error rate dashboards for a full day before you extend it to idempotent writes, one endpoint at a time. If retries still aren't solving the problem, the next level up is a circuit breaker that stops calling a failing dependency entirely for a cooldown window.

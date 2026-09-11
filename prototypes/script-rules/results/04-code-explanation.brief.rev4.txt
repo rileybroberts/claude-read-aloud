@@ -1,0 +1,7 @@
+A shell pipeline connects commands left-to-right through pipes, while a subshell creates an isolated child shell process that inherits the parent's environment.
+
+Pipelines chain commands so stdout becomes stdin for the next stage, with each command running in its own subprocess concurrently. A subshell, created with parentheses or an explicit bash invocation, spawns a completely separate shell instance. Both run in separate processes, so variable assignments in a pipeline or subshell don't affect the parent shell after they exit.
+
+The first gotcha is that pipeline variables disappear—if you write a loop in a pipeline stage, the count stays zero afterward because the subprocess can't modify the parent's variables, so use process substitution or a here-string instead. Second, subshell exits are invisible: calling exit inside a subshell only exits that subprocess, not your parent script, unless you check the exit status afterward.
+
+Third, the set e flag behaves differently in pipelines and subshells—in pipelines with set e, only the rightmost command's failure kills the script unless pipefail is enabled, while in subshells, set e applies only to that isolated shell, so you need to propagate the exit code explicitly if the parent should care.

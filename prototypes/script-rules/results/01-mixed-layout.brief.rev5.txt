@@ -1,0 +1,9 @@
+Exponential backoff with jitter retries failed requests and stops hammering a struggling server.
+
+When a transient error happens, the code waits and tries again, doubling the wait each time. A little random jitter keeps many clients from retrying at the same moment. The implementation lives in the retry file and takes options for the max number of attempts, the starting delay in milliseconds, and a ceiling on how long to wait between tries.
+
+The default settings give a delay schedule that starts at 250 milliseconds and doubles each time, capped at 30 seconds. With jitter added, the fifth attempt takes up to 5,200 milliseconds and the cumulative wait reaches just under 5 seconds. Don't retry writes unless the endpoint supports an idempotency key, because a retried charge request can bill twice.
+
+Always respect the server's Retry-After header if it sends one, and cap the total elapsed time rather than just the attempt count, so a request doesn't hang for over a minute.
+
+To roll it out, first install the helper and export it from your HTTP client module. Wrap only the read paths—GET and HEAD—and deploy. Then watch your p ninety-nine latency and error-rate dashboards for a day before you extend it to idempotent writes, one endpoint at a time. If retries still aren't enough, add a circuit breaker next to stop calling the dependency and fail fast after a threshold of consecutive failures.

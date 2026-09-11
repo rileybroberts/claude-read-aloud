@@ -1,0 +1,5 @@
+The migration landed on April 9th, 2026 at 3:47 a.m.
+
+UTC and cut p99 latency by 62 percent while tripling throughput. It touched about 1,240 files across 7 packages, dropped latency from 890 milliseconds to 338 milliseconds, and saved 14,500 dollars a month on the AWS bill. The real problem came from PostgreSQL 16.2 changing how unique indexes handle null distinct values, which caused about 0.3 percent of rows that had coexisted for years to suddenly collide.
+
+They caught the collision in staging and rolled back within 11 minutes, then added a deduplication pass and ran again. The key lessons: read the release notes twice, keep the old read replica warm for at least 48 hours, and never schedule a cutover on a Friday. Their Thursday cutover meant they had a full workday to fix things, instead of debugging errors at 2 a.m. on a Saturday when the on-call engineer's phone is off.

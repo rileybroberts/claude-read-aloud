@@ -1,0 +1,19 @@
+Prototype state is ready with silent off, no stale player or say processes, Claude Code version 2.1.269, and the max thinking tokens variable unset, so the two variants will differ as the probes measured.
+
+Your part now. Open a second terminal and start Claude Code with the prototype plugin. Run the fast variant first, since it's the one the design is leaning toward. Type the command to set max thinking tokens to zero, then claude with the plugin directory flag pointing to the prototype read aloud say plugin folder.
+
+Then, if you have the patience, run one more time without the environment variable for item one only, to feel the thinking delay.
+
+Ask something that produces a long response with a code block, a table, and a list, and work through this checklist. Jot a line per item and paste them back here; the timings will be pulled from the log separately.
+
+First, when the response lands, type the read aloud command to start reading. Note the rough seconds to speech. Does the script sound like a person talking? How did it handle the code, table, and list? Was there any dead air between paragraphs?
+
+Second, check the screen footprint while the fork runs and when it finishes. Does it show a tasks footer hint, a task row, or a relayed reading started line? Is that acceptable as the one-line notice?
+
+Third, mid-reading, type the read aloud stop command. How does the blocked expansion render, as a plain line or error banner? Did speech stop within a second? Did anything land in the conversation? Fourth, mid-reading, type the read aloud command again.
+
+Was it a clean handover to the new reading? Fifth, test control verbs. Type the read aloud status command, then read aloud auto on, then read aloud auto off. Check rendering only. Sixth, try variants. Type the read aloud brief command on a long response, then the read aloud show flag to see a script on screen.
+
+Seventh, type the read aloud command the instant a response lands. Did it read the new one or the previous one? Eighth, exit Claude Code while speech plays. The expected result is that speech continues.
+
+Ninth, give your gut verdict. Would you leave this on? What would make you turn it off? Do not run reset afterwards; the log is needed intact to report the timings.

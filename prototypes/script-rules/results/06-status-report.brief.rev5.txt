@@ -1,0 +1,15 @@
+The prototype ticket is resolved, the map is updated, and there are three open frontier tickets ahead.
+
+Your verdict and what the log and transcripts showed are now recorded on the ticket. The Command's shape holds: one-line notice, streamed speech that handled code, tables, and lists, stop and replace by ear, speech surviving a quit. The say voice is the weak link, which confirms Kokoro as the primary engine.
+
+Time to first audio in the interactive session with thinking off ranged from 3.7 to 5.4 seconds for seven readings, and the 531-word fixture came in at 4.4 seconds.
+
+Three findings emerged that the checklist could not see, all pointing the same way. The fork always ended with the exact sentinel, but the main model relayed it verbatim only twice in six attempts. The other relays overwrote the saved response, and twice a later read aloud command read the relay text aloud, which is outside the plugin's control.
+
+Forks cannot be cancelled; the replaced fork kept writing into the dead reading, no relay appeared until you interrupted the main turn, and three of nine forks died at the moment a stop was typed. The show flag did nothing because the writer ignored the conditional instruction, and show without dashes started a reading.
+
+The decision is to keep the Command's shape, drop the forked-skill mechanism as the default assumption, and weigh the hook-only Command with a daemon-run writer first. The standing decision about the fork is flagged as under review. Script rules, engine interface, and subcommands tickets each got a short context section from this verdict. The Auto mode ticket is retitled to also decide whether the Command shares its writer, and it now carries the relay and thinking findings.
+
+The evidence from your session is committed and pushed to the prototype branch under results, interactive, and the prototype's scratch directory is wiped.
+
+The frontier for the next session, in map order, is script rules, auto mode and the shared writer, and engine interface and daemon. All three are unblocked and unclaimed.

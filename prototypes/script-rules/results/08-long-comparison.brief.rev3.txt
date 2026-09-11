@@ -1,0 +1,7 @@
+That was a long one, so here's the one minute version.
+
+The best approach is uv, with a committed lock file and a bootstrap that installs uv into a plugin-local prefix.
+
+The plain venv route appears to have no dependencies, but on macOS you're actually depending on the command-line tools shim, on Python 3.9 which is past end of life, and on Apple's universal build behaving well with native arm64 wheels. Its failure mode is also the only one that blocks on a modal dialog. pipx is built for exposing a CLI app to humans, not for pinning a daemon as an implementation detail of a plugin. It gives you neither locking nor interpreter management, and it's the least likely to already be installed.
+
+uv's real cost is that it's a young third-party binary from a single vendor, adding a non-Python dependency to your project. In exchange you get the only option that pins both the interpreter and the full dependency graph, the only one with a fast warm startup path suitable for per-invocation use, and the only one whose absence is a clean, scriptable check. Pin the uv version in the bootstrap so that process itself is reproducible, and set requires-python to 3.12 or higher so MLX resolves against a native arm64 interpreter regardless of what the machine has.

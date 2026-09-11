@@ -1,0 +1,11 @@
+That was a long one, so here's the one minute version.
+
+The question is which Python runtime to use for a daemon: uv, pipx, or the system venv.
+
+The answer is uv, with the daemon installed into a plugin-local prefix. The plain venv depends on the Command Line Tools shim, an end-of-life Python 3.9, and Apple's universal2 interpreter working well with native arm64 wheels. It also has the worst failure mode: on a machine without the Command Line Tools, invoking Python pops a GUI installer dialog and blocks. That's disqualifying for something invoked from a hook.
+
+Pipx is built to expose a CLI app on the path for a human. Your daemon is an implementation detail of a plugin, and teammates shouldn't have it on their path. Pipx gives you neither locking nor interpreter management, and it's the least likely of the three to already be installed.
+
+Uv is a young, fast-moving third-party binary, so you're adding a non-Python dependency to a Python project. That's a real supply-chain consideration. In exchange, it's the only option that pins both the interpreter and the dependency graph, the only one with a fast warm path suitable for per-invocation startup, and the only one whose absence is a clean, scriptable check.
+
+The bootstrap installs uv into the plugin-local prefix rather than mutating the teammate's shell config, and pins the uv version so the bootstrap itself is reproducible. Set the requires-python to 3.12 or higher so MLX resolves against a native arm64 interpreter regardless of what's on the machine.

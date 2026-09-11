@@ -1,0 +1,7 @@
+The migration landed and cut p ninety-nine latency by 62 percent, plus AWS costs fell by fourteen thousand five hundred dollars a month.
+
+It touched about one thousand two hundred forty files across seven packages on April ninth, two thousand twenty-six at three forty-seven a.m. UTC, roughly eighteen months after the original RFC. Throughput went from about four hundred fifty requests per second to two thousand one hundred requests per second, and p ninety-nine latency dropped from eight hundred ninety milliseconds to three hundred thirty-eight milliseconds.
+
+The tricky part wasn't the SQL. PostgreSQL version sixteen point two changed how the NULLS DISTINCT clause behaves in unique indexes, so about zero point three percent of rows that had quietly coexisted for years suddenly collided. The team caught it in staging, rolled back within eleven minutes, added a dedupe pass, and ran the migration again.
+
+If you're doing something similar, read the release notes twice. Keep the old read-replica warm for at least forty-eight hours, and don't schedule a cutover on a Friday. For example, theirs ran Thursday, meaning they still had a full workday to fix things, versus the alternative: debugging a five hundred error storm at two a.m. on Saturday while your on-call engineer's phone is on do not disturb.

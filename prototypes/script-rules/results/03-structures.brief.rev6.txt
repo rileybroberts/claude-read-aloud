@@ -1,0 +1,9 @@
+You can't safely share one connection pool across forked workers because the file descriptors get duplicated but the protocol state doesn't, leaving multiple workers interleaving bytes on the same socket.
+
+The problem shows up as interleaved protocol frames—worker A sends a query, worker B sends another, and both read whichever response arrives first, so you get the wrong data. You'll see column does not exist errors on queries that definitely have the column, or unexpected message type errors from the driver. Sometimes the first worker to exit tears down the socket entirely, giving the others connection reset errors.
+
+Or the parent thinks it holds n connections but the OS sees n times the number of workers pointing at those n sockets, and the server's max connections accounting doesn't match.
+
+Create the pool after the fork instead, sized so the total stays under budget. Use about 80 percent of your max connections divided by the worker count, then round down and leave at least 5 free for superuser access and migrations. With max connections of 100 and 4 workers, that's 20 each—round down to 18 for headroom when a worker is mid-restart.
+
+If you're behind PgBouncer in transaction mode, the bouncer owns the real connections and oversizing the app pool is nearly free, so max connections on Postgres itself can stay small.

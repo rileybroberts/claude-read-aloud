@@ -1,0 +1,11 @@
+That was a long one, so here's the one minute version.
+
+The best choice for the daemon's Python runtime is uv, with dependencies pinned in a lock file and uv installed to a plugin-local folder.
+
+Plain venv appears to have no dependencies but actually relies on Apple's command-line tools shim, which is a gigabyte to install if not already there, and it ships a Python version that's already end of life. System Python also creates a failure mode where invoking it pops a GUI installer dialog that blocks until someone notices. Pipx is the right tool for exposing CLI apps to humans, not for pinning a daemon as an implementation detail of a plugin.
+
+It has no lock file, no interpreter management, and it's the least likely of the three to already be installed.
+
+Uv adds a young third-party binary to your supply chain, but it's the only option that pins both the interpreter and the full dependency graph. It has the fastest warm start time, suitable for per-invocation startup, and it's clean and scriptable to detect and bootstrap. The bootstrap installs uv into a plugin-local prefix rather than mutating the teammate's shell config.
+
+Two additions are worth making: pin the uv version in the bootstrap for reproducibility, and set uv to download its own Python automatically with an explicit requires-python constraint of version 3.12 or higher so native arm64 wheels resolve cleanly for MLX.
