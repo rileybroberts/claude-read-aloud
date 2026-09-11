@@ -1,0 +1,8 @@
+{
+  "name": "read-aloud-proto",
+  "description": "PROTOTYPE (throwaway): /read-aloud Command with macOS say as a stand-in Engine. Answers wayfinder ticket #4.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Riley Roberts"
+  }
+}

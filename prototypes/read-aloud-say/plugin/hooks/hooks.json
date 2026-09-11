@@ -1,0 +1,30 @@
+{
+  "description": "PROTOTYPE hooks: Stop captures the Response per session; UserPromptExpansion handles control verbs without a model turn.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/bin/read-aloud-ctl",
+            "args": ["capture"],
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptExpansion": [
+      {
+        "matcher": "read-aloud-proto:read-aloud",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/bin/read-aloud-ctl",
+            "args": ["expansion"],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

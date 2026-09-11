@@ -1,0 +1,4 @@
+# Raw event streams and debug logs stay local: large, and they echo this machine's full plugin/tool inventory.
+*.jsonl
+*debug.log
+latest

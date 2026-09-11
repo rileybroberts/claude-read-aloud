@@ -1,0 +1,153 @@
+Timelines of every Reading the probes produced (silent mode: say -o to a file plus simulated playback time).
+Generated 2026-09-11 13:25 PDT by read-aloud-ctl report.
+
+Reading 131101-f8b6 for session smoke-1. Offsets in seconds from T0 (/read-aloud typed).
+    -0.09  Response injected into the skill
+    +0.05  start (player pid 73801)
+    +0.09  paragraph 1 queued (10 words)
+    +0.19  paragraph 1 speaking (10 words)   <- FIRST AUDIO, 0.19s after T0
+    +1.16  paragraph 2 queued (20 words)
+    +1.23  writer finished: 2 paragraphs
+    +3.35  paragraph 1 finished (3.16s)
+    +3.35  paragraph 2 speaking (20 words)
+    +6.35  killed (replaced)
+
+Reading 131107-daad for session smoke-1. Offsets in seconds from T0 (/read-aloud typed).
+    -0.09  Response injected into the skill
+    +6.36  start (player pid 73931, replaced 131101-f8b6)
+    +6.40  paragraph 1 queued (2 words)
+    +6.45  writer finished: 1 paragraphs
+    +6.50  paragraph 1 speaking (2 words)   <- FIRST AUDIO, 6.50s after T0
+    +7.47  paragraph 1 finished (0.97s)
+    +7.47  player exit: done after 1 paragraphs
+
+Reading 131109-d264 for session smoke-1. Offsets in seconds from T0 (/read-aloud typed).
+    -0.09  Response injected into the skill
+    +8.18  start (player pid 73948)
+    +8.22  paragraph 1 queued (27 words)
+    +8.32  paragraph 1 speaking (27 words)   <- FIRST AUDIO, 8.32s after T0
+    +8.79  killed (stop)
+
+Reading 131451-f45e for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T1 (Response injected).
+    +0.00  Response injected into the skill
+   +14.01  start (player pid 76853)
+   +17.43  paragraph 1 queued (30 words)
+   +17.47  paragraph 1 speaking (30 words)   <- FIRST AUDIO, 17.47s after T1
+   +19.76  paragraph 2 queued (62 words)
+   +22.21  paragraph 3 queued (50 words)
+   +24.55  paragraph 4 queued (38 words)
+   +26.50  paragraph 5 queued (35 words)
+   +26.95  paragraph 1 finished (9.48s)
+   +26.95  paragraph 2 speaking (62 words)
+   +28.85  paragraph 6 queued (42 words)
+   +31.03  paragraph 7 queued (35 words)
+   +34.32  paragraph 8 queued (48 words)
+   +35.90  writer finished: 8 paragraphs
+   +46.55  paragraph 2 finished (19.59s)
+   +46.55  paragraph 3 speaking (50 words)
+   +62.34  paragraph 3 finished (15.80s)
+   +62.34  paragraph 4 speaking (38 words)
+   +74.35  paragraph 4 finished (12.01s)
+   +74.36  paragraph 5 speaking (35 words)
+   +85.42  paragraph 5 finished (11.06s)
+   +85.42  paragraph 6 speaking (42 words)
+   +98.69  paragraph 6 finished (13.27s)
+   +98.69  paragraph 7 speaking (35 words)
+  +108.49  killed (replaced)
+
+Reading 131625-844e for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T1 (Response injected).
+    +0.00  Response injected into the skill
+    +9.51  start (player pid 78265, replaced 131451-f45e)
+   +12.16  writer finished: 0 paragraphs
+   +12.20  player exit: done after 0 paragraphs
+  no audio started
+
+Reading 131642-e51f for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T1 (Response injected).
+    +0.00  Response injected into the skill
+    +9.67  start (player pid 78821)
+   +12.74  paragraph 1 queued (2 words)
+   +12.81  paragraph 1 speaking (2 words)   <- FIRST AUDIO, 12.81s after T1
+   +14.23  paragraph 1 finished (1.42s)
+   +14.52  writer finished: 1 paragraphs
+   +14.54  player exit: done after 1 paragraphs
+
+Reading 131658-c17d for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T1 (Response injected).
+    +0.00  Response injected into the skill
+    +6.84  start (player pid 79388)
+  +101.08  killed (replaced)
+  no audio started
+
+Reading 131832-9efc for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T0 (/read-aloud typed).
+    +1.11  Response injected into the skill
+    +8.10  start (player pid 80678, replaced 131658-c17d)
+   +11.55  paragraph 1 queued (31 words)
+   +11.56  paragraph 1 speaking (31 words)   <- FIRST AUDIO, 11.56s after T0
+   +14.08  paragraph 2 queued (59 words)
+   +16.46  paragraph 3 queued (55 words)
+   +19.82  paragraph 4 queued (75 words)
+   +21.35  paragraph 1 finished (9.79s)
+   +21.35  paragraph 2 speaking (59 words)
+   +22.14  paragraph 5 queued (56 words)
+   +24.83  paragraph 6 queued (42 words)
+   +27.22  paragraph 7 queued (58 words)
+   +29.74  writer finished: 7 paragraphs
+   +39.98  paragraph 2 finished (18.63s)
+   +39.98  paragraph 3 speaking (55 words)
+   +57.36  paragraph 3 finished (17.37s)
+   +57.36  paragraph 4 speaking (75 words)
+   +73.82  killed (stop)
+
+Reading 132128-4f7b for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T0 (/read-aloud typed).
+    +1.12  Response injected into the skill
+   +12.55  start (player pid 83019)
+   +12.55  paragraph 1 queued (34 words)
+   +12.58  paragraph 1 speaking (34 words)   <- FIRST AUDIO, 12.58s after T0
+   +17.00  paragraph 2 queued (58 words)
+   +19.33  paragraph 3 queued (47 words)
+   +21.71  paragraph 4 queued (45 words)
+   +23.32  paragraph 1 finished (10.74s)
+   +23.32  paragraph 2 speaking (58 words)
+   +24.21  paragraph 5 queued (70 words)
+   +27.80  paragraph 6 queued (50 words)
+   +29.98  paragraph 7 queued (36 words)
+   +32.39  paragraph 8 queued (48 words)
+   +33.91  writer finished: 8 paragraphs
+   +41.64  paragraph 2 finished (18.32s)
+   +41.64  paragraph 3 speaking (47 words)
+   +56.49  paragraph 3 finished (14.85s)
+   +56.49  paragraph 4 speaking (45 words)
+   +70.71  paragraph 4 finished (14.21s)
+   +70.71  paragraph 5 speaking (70 words)
+   +92.82  paragraph 5 finished (22.11s)
+   +92.82  paragraph 6 speaking (50 words)
+  +108.62  paragraph 6 finished (15.79s)
+  +108.62  paragraph 7 speaking (36 words)
+  +109.83  killed (replaced)
+
+Reading 132306-e500 for session 6d83e342-28fc-43b7-84ab-1e0e434d76fb. Offsets in seconds from T0 (/read-aloud typed).
+    +0.98  Response injected into the skill
+    +5.31  start (player pid 84492, replaced 132128-4f7b)
+    +5.32  paragraph 1 queued (29 words)
+    +5.36  paragraph 1 speaking (29 words)   <- FIRST AUDIO, 5.36s after T0
+   +10.48  paragraph 2 queued (53 words)
+   +13.15  paragraph 3 queued (48 words)
+   +14.52  paragraph 1 finished (9.16s)
+   +14.52  paragraph 2 speaking (53 words)
+   +15.67  paragraph 4 queued (59 words)
+   +18.15  paragraph 5 queued (45 words)
+   +20.43  paragraph 6 queued (37 words)
+   +22.97  paragraph 7 queued (54 words)
+   +24.57  writer finished: 7 paragraphs
+   +31.26  paragraph 2 finished (16.74s)
+   +31.26  paragraph 3 speaking (48 words)
+   +46.42  paragraph 3 finished (15.16s)
+   +46.43  paragraph 4 speaking (59 words)
+   +65.06  paragraph 4 finished (18.64s)
+   +65.06  paragraph 5 speaking (45 words)
+   +79.28  paragraph 5 finished (14.22s)
+   +79.28  paragraph 6 speaking (37 words)
+   +90.97  paragraph 6 finished (11.69s)
+   +90.98  paragraph 7 speaking (54 words)
+  +108.03  paragraph 7 finished (17.06s)
+  +108.03  player exit: done after 7 paragraphs
+
