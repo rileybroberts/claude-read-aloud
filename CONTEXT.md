@@ -9,7 +9,7 @@ The final message of the most recent assistant turn. Excludes the narration betw
 _Avoid_: Output, answer, reply, last message
 
 **Script**:
-The spoken-friendly rendition of a Response, written by the model with judgement about what to keep, describe, or drop. Full content by default; a brief variant carries only the key points.
+The spoken-friendly rendition of a Response, written by the Writer with judgement about what to keep, describe, or drop. Full content by default; a brief variant carries only the key points.
 _Avoid_: Summary, transcript, rewrite, TTS text
 
 **Reading**:
@@ -31,3 +31,11 @@ _Avoid_: Manual mode, on-demand
 **Auto mode**:
 The Trigger where every Response starts a Reading until the user turns it off.
 _Avoid_: Always-on, continuous, streaming mode
+
+**Writer**:
+The model call, separate from the conversation, that turns one Response into a Script. The same Writer serves both Triggers.
+_Avoid_: Rewriter, summariser, script model, fork
+
+**Notice**:
+The one line shown on screen when a Trigger is answered, such as a Reading starting or stopping. The Script itself never appears on screen unless asked for.
+_Avoid_: Status line, relay, message, banner
