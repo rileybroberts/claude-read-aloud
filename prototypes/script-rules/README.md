@@ -193,6 +193,10 @@ file. Jot a line per item on the ticket.
 
 Record the verdict on ticket #5.
 
-## Verdict
+## Verdict (2026-09-15, listened to in Kokoro af_heart)
 
-Pending the listening session.
+Recorded on [ticket #5](https://github.com/rileybroberts/claude-read-aloud/issues/5). In short: code and tables come
+across properly; the nine-step checklist is followable by ear and its breaks feel like pauses; dates, money, units, and
+abbreviations sound right; a 280-word brief of a dense status report is still worth having as "brief"; the chunker's
+cuts and the writer's own paragraphs are not audibly different; the Script sounds like a person explaining. The
+cap-notice wording was skipped and stays unjudged. The `say` voice was unlistenable, which is why the Kokoro path exists.
