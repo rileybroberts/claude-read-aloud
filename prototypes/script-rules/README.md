@@ -29,21 +29,35 @@ Responses, a runner that streams the writer's output to macOS `say`, and a lint 
 - `bin/run-all [--tag rev] [--model haiku] [--chunk] [--only 04]`: every Response in both modes, silently, four at a
   time, then a table: response words, Script words, opening words, the other chunks' words, time to the first chunk,
   total time, lint flags.
-- `bin/listen results/<file>.txt [--from N]`: speaks a saved Script paragraph by paragraph. Ctrl-C stops.
+- `bin/listen results/<file>.txt [--from N]`: speaks a saved Script paragraph by paragraph with `say`. Ctrl-C stops.
+- `bin/kokoro-setup.sh`, `bin/render.py`, `bin/render-all.sh`: the same Scripts in Kokoro, the Engine the map chose,
+  because the `say` voice was unlistenable. Setup makes a throwaway venv with `mlx-audio` and `misaki[en]`; render
+  synthesises a Script one paragraph per call (as the daemon would) into `results/audio/<name>.wav` and prints
+  per-paragraph synthesis time. Needs Homebrew's `espeak-ng` (finding 9).
 - Over the duration cap (default 680 words, about four minutes at 170 words a minute) the harness switches to brief
   and speaks a fixed notice first, before the writer has produced anything: "That was a long one, so here's the one
   minute version."
 
 ## Run it
 
+Listening, in Kokoro (the rendered wavs for rev6 are already in `results/audio/`):
+
 ```
-bin/run-all --tag mine --chunk                                      # all eight, both modes, silent; prints the table
-bin/write-script responses/04-code-explanation.md --chunk --speak   # one Response, spoken as it streams
-bin/write-script responses/08-long-comparison.md --chunk --speak    # the capped one: notice, then brief
-bin/listen results/06-status-report.full.rev6.txt                   # replay a saved Script
+open results/audio                                                  # Finder; double-click any wav
+afplay results/audio/04-code-explanation.full.rev6.wav              # or from the terminal, Ctrl-C stops
 ```
 
-Edit `prompt/rules.md`, bump the tag, run again, listen to what changed.
+Writing new Scripts and rendering them:
+
+```
+bin/run-all --tag mine --chunk                                      # all eight, both modes, silent; prints the table
+bin/write-script responses/04-code-explanation.md --chunk           # one Response; --speak adds the say voice
+brew install espeak-ng && bin/kokoro-setup.sh                       # once: Kokoro venv + model (about 1 GB)
+.venv/bin/python bin/render.py results/04-code-explanation.full.mine.txt --play   # Kokoro, then afplay
+bin/render-all.sh mine                                              # every Script of one tag to results/audio/
+```
+
+Edit `prompt/rules.md`, bump the tag, run again, render, listen to what changed.
 
 ## Findings (2026-09-11, Claude Code 2.1.269, Bedrock, haiku 4.5 as the writer)
 
@@ -102,6 +116,17 @@ capped, so its full run is the brief run), plus one sonnet run for comparison: 1
    first token 1.5 to 3.3 s after launch, first chunk (the first sentence) 1.7 to 3.6 s, a 350-word full Script done
    in 4 to 8 s, $0.005 to $0.011 per Script (list price, Bedrock). With the chunker the first spoken unit is one sentence, so first audio is
    bounded by first-sentence time plus Engine synthesis of one sentence, not by the writer's first paragraph.
+9. **Kokoro on this machine (M4 Max, mlx-audio 0.5.4, Kokoro-82M, voice af_heart), for the Engine ticket.** Rendering
+   the fifteen rev6 Scripts one paragraph per call: model load 0.4 s from the local cache; the first `generate` call in
+   a process costs 2.3 to 2.7 s (pipeline creation, a one-time warm-up the daemon pays once); after that a 20-word
+   chunk synthesises in about 0.25 s and a 60 to 80 word chunk in 0.6 to 0.9 s, about 35 times faster than real
+   time, at about 173 words a minute of speech. So a warm daemon adds well under half a second to first audio and
+   the writer's first token (1.5 to 3.3 s) is the whole latency budget. Two gotchas for the install ticket: mlx-audio
+   does not depend on `misaki`, Kokoro's text processor, so it must be installed explicitly (`misaki[en]`), and
+   misaki's bundled `espeakng-loader` 0.2.4 library aborts inside `espeak_Initialize` on this Mac (macOS 26) with
+   its compiled-in CI path, whatever data path it is given; pointing phonemizer at Homebrew's `espeak-ng` 1.52
+   (`brew install espeak-ng`, see `bin/render.py`) fixes it. misaki also downloads spaCy's `en_core_web_sm` on first
+   use. Alternative voices rendered for comparison: `results/audio/voice-am_michael.wav`, `voice-bf_emma.wav`.
 
 Final revision (rev6, chunked), one row per run:
 
@@ -141,28 +166,30 @@ over 200 words. They are the prompt's targets, not the daemon's guarantee (findi
 
 ## Human checklist (the part only a listener can settle)
 
-Run each with `--chunk --speak` unless noted. Jot a line per item on the ticket.
+Everything is pre-rendered in Kokoro under `results/audio/`; `open results/audio` and double-click, or `afplay` a
+file. Jot a line per item on the ticket.
 
-1. `responses/04-code-explanation.md`, full. Does the code come across as "what it does" rather than syntax? Is the
+1. `04-code-explanation.full.rev6.wav`. Does the code come across as "what it does" rather than syntax? Is the
    table's point clear without the cells? Do the three gotchas land as three things?
-2. `responses/01-mixed-layout.md`, full. Same for the retry code, the delay table, the four cautions, the four steps.
+2. `01-mixed-layout.full.rev6.wav`. Same for the retry code, the delay table, the four cautions, the four steps.
    Does "p ninety-nine" sound right, or should it be "p 99"?
-3. `responses/05-step-list.md`, full. Nine steps as spoken instructions: can you follow them by ear? Do the chunks feel
+3. `05-step-list.full.rev6.wav`. Nine steps as spoken instructions: can you follow them by ear? Do the chunks feel
    like natural pauses or like run-ons?
-4. `responses/02-prose-pronunciation.md`, full. Dates, times, money, units, "e.g." and "i.e.", "req/s". Anything the
+4. `02-prose-pronunciation.full.rev6.wav`. Dates, times, money, units, "e.g." and "i.e.", "req/s". Anything the
    voice mangles that the rules should have rewritten?
-5. `responses/06-status-report.md`, brief, then full. Brief came out near 280 words here (finding 4): is that still
-   worth having as "brief", or should brief be dropped in favour of full plus stop?
-6. `responses/08-long-comparison.md` (capped). Does the notice sentence work? Alternatives to try by editing
-   `CAP_NOTICE` in `bin/write-script`: "Long answer. Here's the short version." / "This one's long, so I'll give you the
-   brief." Then: does the brief that follows carry the recommendation and the reason?
-7. `responses/07-short-confirmation.md`, full. A one-sentence Response spoken as one sentence: right, or should it be
-   trimmed further?
-8. `responses/03-structures.md`, full. Blockquote, nested list, ASCII diagram, and the sizing formula. Is the formula
+5. `06-status-report.brief.rev6.wav`, then `06-status-report.full.rev6.wav`. Brief came out near 280 words here
+   (finding 4): is that still worth having as "brief", or should brief be dropped in favour of full plus stop?
+6. `08-long-comparison.brief.rev6.wav` (the capped one; the notice sentence is the first thing you hear). Does the
+   notice work? Alternatives to try by editing `CAP_NOTICE` in `bin/write-script`: "Long answer. Here's the short
+   version." / "This one's long, so I'll give you the brief." Then: does the brief carry the recommendation and why?
+7. `07-short-confirmation.full.rev6.wav`. A one-sentence Response spoken as one sentence: right, or trim further?
+8. `03-structures.full.rev6.wav`. Blockquote, nested list, ASCII diagram, and the sizing formula. Is the formula
    spoken usably?
-9. Run one of them **without** `--chunk`. Do the writer's own paragraphs sound any different from the chunker's cuts?
-   (If not, the chunker is free.)
-10. Gut verdict on the voice of the Script itself: does it sound like a person explaining, or like a document read out?
+9. `04-code-explanation.full.rev6-nochunk.wav` against item 1's file: the writer's own paragraphs versus the
+   chunker's cuts. Any audible difference? (If not, the chunker is free.)
+10. Voice: `voice-am_michael.wav` and `voice-bf_emma.wav` are item 1's Script in two other Kokoro voices. Which
+    default? (This feeds the Engine ticket, not this one, but you will have an opinion by now.)
+11. Gut verdict on the Script itself: does it sound like a person explaining, or like a document read out?
 
 Record the verdict on ticket #5.
 

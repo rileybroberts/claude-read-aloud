@@ -1,0 +1,13 @@
+A shell pipeline connects command output to input using the pipe operator, while a subshell creates a new child shell process that runs in isolation.
+
+Pipelines chain commands in left-to-right flow where the output of one command becomes the input of the next. Each command runs in its own subprocess, and they execute concurrently. All stages descend from the same parent shell, but because each runs in a separate process, changes to variables in one stage don't affect others.
+
+A subshell, created with parentheses or the bash dash c flag, spawns an entirely new shell instance. It inherits the parent's environment but operates independently. Variable assignments, directory changes, and other modifications inside a subshell vanish when it exits because they never touched the parent's memory space.
+
+The table contrasts these two mechanisms. Pipelines connect stdout to stdin using the pipe operator, while subshells execute in an isolated child shell using parentheses or bash dash c. In a pipeline, all stages run concurrently; in a subshell, it runs independently then exits. A pipeline's exit status is the last command's, or all commands' if pipefail is set; a subshell returns its own exit status to the parent.
+
+Variables remain unchanged in both because they run in separate processes, but in a subshell, variables stay scoped to that subshell only.
+
+There are three gotchas to watch for. First, pipeline variables disappear: if you pipe to a while loop that counts lines, the count variable stays empty afterward because the while loop runs in a subprocess and can't modify the parent's variables. Use process substitution or a here-string instead. Second, subshell exits are invisible: a subshell can call exit one without terminating your script—it only exits itself, and your parent shell continues unless you explicitly check the exit status.
+
+Third, the set dash e flag behaves differently in these contexts. In pipelines with set dash e, only the rightmost command's failure kills the script unless pipefail is enabled. In subshells, set dash e applies independently—the subshell dies but the parent might not unless you propagate the exit code by running or exit and the exit status.
