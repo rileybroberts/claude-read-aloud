@@ -39,3 +39,11 @@ _Avoid_: Rewriter, summariser, script model, fork
 **Notice**:
 The one line shown on screen when a Trigger is answered, such as a Reading starting or stopping. The Script itself never appears on screen unless asked for.
 _Avoid_: Status line, relay, message, banner
+
+**Daemon**:
+The long-lived local process that owns Readings: it runs the Writer, cuts the Script into Chunks, drives the Engine, and plays the audio. One per user; every Trigger reaches it through the plugin's hooks.
+_Avoid_: Server, service, background worker, player process
+
+**Chunk**:
+One piece of a Script sized for a single Engine call and spoken in order. The first Chunk is the Script's opening sentence alone.
+_Avoid_: Paragraph, segment, sentence group, block
